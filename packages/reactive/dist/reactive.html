@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #fc_frame{
+      bottom: 60px !important;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <div id="app1"></div>
+  <div id="app2"></div>
+  <button id="btn">按钮</button>
+  <script type="module">
+    import "./reactive.js"
+    // import { reactive, effect } from '../../../node_modules/@vue/reactivity/dist/reactivity.esm-browser.js';
+    import { reactive, effect } from './reactive.js';
+
+    const app = document.getElementById('app')
+    const app1 = document.getElementById('app1')
+    const app2 = document.getElementById('app2')
+    const state = reactive({
+        name: '张三',
+        age: 18,
+        like: '吃饭'
+    })
+    effect(() => {
+      app.innerHTML = state.name
+      effect(() => {
+        app1.innerHTML = state.like
+      })
+      app2.innerHTML = state.age
+    })
+    document.getElementById('btn').addEventListener('click', () => {
+      state.age++
+    })
+    // console.log(state);
+
+    // const person = {
+    //   name: '张三',
+    //   age: 18,
+    //   get fullName() {
+    //     return this.name + ' - ' + this.age
+    //   },
+    // }
+
+    // const proxyPerson = new Proxy(person, {
+    //   get(target, key, receiver) {
+    //     console.log('get', key, receiver);
+        
+    //     return Reflect.get(target, key, receiver)
+    //     // return target[key]
+    //   }
+    // })
+    // proxyPerson.fullName
+  </script>
+</body>
+</html>
